@@ -42,8 +42,26 @@ def get_shop_list_by_dishes(dishes, person_count):
     return shop_list
 
 
-result = get_shop_list_by_dishes(['Запеченный картофель', 'Омлет'], 2)
+file_names = ['1.txt', '2.txt', '3.txt'] 
 
-# Красиво выводим результат
-import pprint
-pprint.pprint(result)
+all_data = []
+
+def get_lines_count(file_info_list):
+    return file_info_list[1]
+
+for name in file_names:
+    with open(name, 'r', encoding='utf-8') as f:
+        lines = f.readlines()
+        all_data.append([name, len(lines), lines])
+
+all_data.sort(key=get_lines_count)
+
+with open('result.txt', 'w', encoding='utf-8') as out_f:
+    for file_info in all_data:
+        name, count, content = file_info
+        out_f.write(f"{name}\n{count}\n") 
+        out_f.writelines(content)
+        out_f.write("\n")
+
+print("Файлы в 'result.txt'")
+
